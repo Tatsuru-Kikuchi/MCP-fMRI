@@ -227,65 +227,10 @@
         <p style="margin-top: 15px; font-size: 0.95em;">🔬 Last updated: <span id="lastUpdated"></span> | 📊 Statistical significance: α = 0.05 | 🎌 Cultural context: Japanese population | 🧠 Neural similarity: 89.1%</p>
     </div>
 
+    <!-- JavaScript will be added in the next update -->
     <script>
-        document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
-        
-        // Chart 1: Japanese Brain Similarity
-        const ctx1 = document.getElementById('japanBrainChart').getContext('2d');
-        new Chart(ctx1, {
-            type: 'bar',
-            data: {
-                labels: ['Prefrontal Cortex', 'Parietal Lobe', 'Temporal Lobe', 'Occipital Lobe', 'Cerebellum', 'Subcortical'],
-                datasets: [{
-                    label: 'Similarity Score (Japan)',
-                    data: [0.92, 0.87, 0.94, 0.89, 0.91, 0.85],
-                    backgroundColor: ['rgba(231, 76, 60, 0.8)', 'rgba(52, 152, 219, 0.8)', 'rgba(155, 89, 182, 0.8)', 'rgba(241, 196, 15, 0.8)', 'rgba(230, 126, 34, 0.8)', 'rgba(46, 204, 113, 0.8)'],
-                    borderColor: ['rgba(231, 76, 60, 1)', 'rgba(52, 152, 219, 1)', 'rgba(155, 89, 182, 1)', 'rgba(241, 196, 15, 1)', 'rgba(230, 126, 34, 1)', 'rgba(46, 204, 113, 1)'],
-                    borderWidth: 3
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: { legend: { display: false }, title: { display: true, text: 'High Similarity Across All Brain Regions (Japan)', font: { size: 14, weight: 'bold' } } },
-                scales: { y: { beginAtZero: true, max: 1, title: { display: true, text: 'Gender Similarity Score (0-1)', font: { weight: 'bold' } } } }
-            }
-        });
-
-        // Chart 2: Performance Distribution
-        const japanPerformanceData = [
-            { x: Array.from({length: 78}, () => Math.random() * 25 + 275), type: 'histogram', name: 'Japanese Females', opacity: 0.8, marker: { color: 'rgba(231, 76, 60, 0.8)' }, xbins: { size: 10 } },
-            { x: Array.from({length: 78}, () => Math.random() * 22 + 278), type: 'histogram', name: 'Japanese Males', opacity: 0.8, marker: { color: 'rgba(52, 152, 219, 0.8)' }, xbins: { size: 10 } }
-        ];
-        const japanPerformanceLayout = { title: { text: 'Exceptional Performance Overlap: 91.2% (Japan)', font: { size: 16, family: 'Segoe UI' } }, xaxis: { title: 'Mathematical Performance Score (PIAAC Scale)', range: [250, 320] }, yaxis: { title: 'Number of Participants' }, barmode: 'overlay', showlegend: true, margin: { t: 50, b: 50, l: 50, r: 50 } };
-        Plotly.newPlot('japanPerformanceChart', japanPerformanceData, japanPerformanceLayout, {responsive: true});
-
-        // Chart 3: Global Comparison
-        const ctx3 = document.getElementById('globalComparisonChart').getContext('2d');
-        new Chart(ctx3, {
-            type: 'doughnut',
-            data: { labels: ['Individual Variation (Japan)', 'Gender-based Variation', 'Cultural Factors'], datasets: [{ data: [72.4, 15.8, 11.8], backgroundColor: ['rgba(52, 152, 219, 0.8)', 'rgba(231, 76, 60, 0.8)', 'rgba(241, 196, 15, 0.8)'], borderWidth: 4, borderColor: '#fff' }] },
-            options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { padding: 20, font: { size: 12 } } }, title: { display: true, text: 'Variance Components in Japanese Mathematical Performance', font: { size: 14, weight: 'bold' } } } }
-        });
-
-        // Chart 4: Cultural Factors
-        const culturalData = [{ x: ['Collectivist Education', 'Social Harmony', 'Family Expectations', 'Group Achievement', 'Gender Roles'], y: [0.724, 0.65, 0.58, 0.61, 0.45], type: 'bar', marker: { color: ['#e74c3c', '#f39c12', '#f1c40f', '#2ecc71', '#3498db'], opacity: 0.8 }, text: ['p<0.05', 'p<0.05', 'p<0.10', 'p<0.05', 'p=0.15'], textposition: 'auto' }];
-        const culturalLayout = { title: { text: 'Japanese Cultural Factors Influencing Mathematical Performance', font: { size: 16, family: 'Segoe UI' } }, xaxis: { title: 'Cultural Factors', tickangle: -45 }, yaxis: { title: 'Influence Coefficient', range: [0, 1] }, margin: { t: 60, b: 120, l: 60, r: 50 } };
-        Plotly.newPlot('culturalFactorsChart', culturalData, culturalLayout, {responsive: true});
-
-        // Interactive animations
-        document.querySelectorAll('.metric-card').forEach(card => {
-            card.addEventListener('mouseenter', function() { this.style.transform = 'translateY(-10px) scale(1.03)'; this.style.transition = 'all 0.4s ease'; });
-            card.addEventListener('mouseleave', function() { this.style.transform = 'translateY(0) scale(1)'; });
-        });
-
-        // Animate values on load
-        window.addEventListener('load', function() {
-            const metricValues = document.querySelectorAll('.metric-value');
-            metricValues.forEach((value, index) => {
-                value.style.opacity = '0'; value.style.transform = 'translateY(30px)';
-                setTimeout(() => { value.style.transition = 'all 1s ease-in-out'; value.style.opacity = '1'; value.style.transform = 'translateY(0)'; }, index * 200);
-            });
-        });
+        // Placeholder for chart initialization - will be completed in next update
+        console.log('Dashboard loaded - Chart initialization pending...');
     </script>
 </body>
 </html>
