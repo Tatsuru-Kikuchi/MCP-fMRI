@@ -75,7 +75,7 @@ graph TD
 
 ## 📊 Live Research Dashboard & Results Summary
 
-### 🎌 **[View Japan-Focused Interactive Dashboard](./dashboard.html)**
+### 🎌 **[View Japan-Focused Interactive Dashboard](https://tatsuru-kikuchi.github.io/MCP-fMRI/dashboard.html)**
 
 Our sophisticated research dashboard provides real-time quantitative insights focused on Japanese populations:
 
