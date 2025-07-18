@@ -1,0 +1,33 @@
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+# Exclude files from processing
+exclude:
+  - .gitignore
+  - README.md
+  - LICENSE
+  - requirements.txt
+  - src/
+  - docs/
+
+# Include HTML files for processing
+include:
+  - dashboard.html
+  - index.html
+
+# Site settings
+title: "MCP-fMRI Japan Research"
+description: "Gender Similarities in Mathematical Cognition - Japanese Population Focus"
+url: "https://tatsuru-kikuchi.github.io"
+baseurl: "/MCP-fMRI"
+
+# GitHub Pages settings
+github_username: Tatsuru-Kikuchi
+repository: "Tatsuru-Kikuchi/MCP-fMRI"
