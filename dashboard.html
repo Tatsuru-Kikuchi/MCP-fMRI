@@ -200,7 +200,7 @@
                 <div id="japanPerformanceChart" style="height: 500px;"></div>
             </div>
             <div class="chart-container">
-                <div class="chart-title">🌍 Cultural Education Systems Comparison</div>
+                <div class="chart-title">🌍 Education Systems Comparison</div>
                 <div class="chart-status" id="chart3Status">Loading Chart.js...</div>
                 <canvas id="educationSystemChart" width="500" height="350"></canvas>
             </div>
@@ -263,7 +263,7 @@
 
     <script>
         window.addEventListener('load', function() {
-            console.log('Page loaded, initializing enhanced dashboard...');
+            console.log('Page loaded, initializing fixed dashboard...');
             
             document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString('en-US', {
                 year: 'numeric', month: 'long', day: 'numeric'
@@ -277,11 +277,11 @@
                 }
             }
             
-            // Chart 1: Brain Similarity (Chart.js v2.9.4 syntax)
+            // Chart 1: Brain Similarity Bar Chart (Chart.js v2.9.4)
             setTimeout(function() {
                 try {
                     console.log('Initializing Chart 1...');
-                    updateStatus('chart1', 'Initializing Chart.js chart...');
+                    updateStatus('chart1', 'Initializing brain similarity chart...');
                     
                     const ctx1 = document.getElementById('japanBrainChart');
                     if (ctx1 && window.Chart) {
@@ -290,9 +290,9 @@
                         new Chart(ctx1, {
                             type: 'bar',
                             data: {
-                                labels: ['Prefrontal Cortex', 'Parietal Lobe', 'Temporal Lobe', 'Occipital Lobe', 'Cerebellum', 'Subcortical'],
+                                labels: ['Prefrontal\nCortex', 'Parietal\nLobe', 'Temporal\nLobe', 'Occipital\nLobe', 'Cerebellum', 'Subcortical'],
                                 datasets: [{
-                                    label: 'Similarity Score',
+                                    label: 'Gender Similarity Score',
                                     data: [0.92, 0.87, 0.94, 0.89, 0.91, 0.85],
                                     backgroundColor: [
                                         'rgba(231, 76, 60, 0.8)',
@@ -315,10 +315,11 @@
                             },
                             options: {
                                 responsive: true,
+                                maintainAspectRatio: false,
                                 legend: { display: false },
                                 title: {
                                     display: true,
-                                    text: 'High Similarity Across All Brain Regions',
+                                    text: 'High Neural Similarity Across All Brain Regions',
                                     fontSize: 16,
                                     fontStyle: 'bold'
                                 },
@@ -344,7 +345,7 @@
                             }
                         });
                         
-                        updateStatus('chart1', '✅ Chart loaded successfully');
+                        updateStatus('chart1', '✅ Brain similarity chart loaded successfully');
                         console.log('Chart 1 initialized successfully');
                     } else {
                         throw new Error('Chart.js not available or canvas not found');
@@ -355,20 +356,21 @@
                 }
             }, 1000);
 
-            // Chart 2: Performance Distribution (Plotly)
+            // Chart 2: Performance Distribution Histogram (Plotly)
             setTimeout(function() {
                 try {
                     console.log('Initializing Chart 2...');
-                    updateStatus('chart2', 'Initializing Plotly chart...');
+                    updateStatus('chart2', 'Initializing performance distribution...');
                     
                     if (window.Plotly) {
                         console.log('Plotly available, creating performance distribution chart');
                         
+                        // Generate realistic overlapping data
                         const femaleData = [];
                         const maleData = [];
                         for (let i = 0; i < 78; i++) {
-                            femaleData.push(Math.random() * 25 + 275);
-                            maleData.push(Math.random() * 22 + 278);
+                            femaleData.push(Math.random() * 25 + 275); // Mean ~287.5
+                            maleData.push(Math.random() * 22 + 278);   // Mean ~289
                         }
 
                         Plotly.newPlot('japanPerformanceChart', [
@@ -376,28 +378,38 @@
                                 x: femaleData,
                                 type: 'histogram',
                                 name: 'Japanese Females',
-                                opacity: 0.8,
-                                marker: { color: 'rgba(231, 76, 60, 0.8)' },
-                                xbins: { size: 10 }
+                                opacity: 0.7,
+                                marker: { color: 'rgba(231, 76, 60, 0.7)' },
+                                xbins: { size: 8 }
                             },
                             {
                                 x: maleData,
                                 type: 'histogram',
                                 name: 'Japanese Males',
-                                opacity: 0.8,
-                                marker: { color: 'rgba(52, 152, 219, 0.8)' },
-                                xbins: { size: 10 }
+                                opacity: 0.7,
+                                marker: { color: 'rgba(52, 152, 219, 0.7)' },
+                                xbins: { size: 8 }
                             }
                         ], {
-                            title: { text: 'Exceptional Performance Overlap: 91.2%', font: { size: 18 } },
-                            xaxis: { title: 'Mathematical Performance Score (PIAAC Scale)', range: [250, 320], titlefont: { size: 14 } },
-                            yaxis: { title: 'Number of Participants', titlefont: { size: 14 } },
+                            title: { 
+                                text: 'Exceptional Performance Overlap: 91.2%', 
+                                font: { size: 18 }
+                            },
+                            xaxis: { 
+                                title: 'Mathematical Performance Score (PIAAC Scale)', 
+                                range: [250, 320], 
+                                titlefont: { size: 14 }
+                            },
+                            yaxis: { 
+                                title: 'Number of Participants', 
+                                titlefont: { size: 14 }
+                            },
                             barmode: 'overlay',
                             showlegend: true,
                             font: { size: 12 }
                         }, { responsive: true });
                         
-                        updateStatus('chart2', '✅ Chart loaded successfully');
+                        updateStatus('chart2', '✅ Performance distribution loaded successfully');
                         console.log('Chart 2 initialized successfully');
                     } else {
                         throw new Error('Plotly not available');
@@ -408,7 +420,7 @@
                 }
             }, 1500);
 
-            // Chart 3: Education Systems Comparison (Chart.js v2.9.4 syntax)
+            // Chart 3: Education Systems Bar Chart (Chart.js v2.9.4) - Fixed
             setTimeout(function() {
                 try {
                     console.log('Initializing Chart 3...');
@@ -419,33 +431,37 @@
                         console.log('Chart.js available, creating education systems chart');
                         
                         new Chart(ctx3, {
-                            type: 'scatter',
+                            type: 'bar',
                             data: {
+                                labels: ['France\n(Early)', 'Germany\n(Early)', 'S.Korea\n(Early)', 'Japan\n(Late)', 'Finland\n(Late)', 'Sweden\n(Late)', 'Norway\n(Late)'],
                                 datasets: [{
-                                    label: 'Early Tracking Systems',
-                                    data: [
-                                        {x: 'Early', y: 0.28, country: 'France'},
-                                        {x: 'Early', y: 0.18, country: 'Germany'},
-                                        {x: 'Early', y: 0.22, country: 'S.Korea'}
+                                    label: 'Gender Gap Effect Size (d)',
+                                    data: [0.28, 0.18, 0.22, 0.15, 0.08, 0.09, 0.07],
+                                    backgroundColor: [
+                                        'rgba(231, 76, 60, 0.8)',  // Early tracking (red)
+                                        'rgba(231, 76, 60, 0.8)',
+                                        'rgba(231, 76, 60, 0.8)',
+                                        'rgba(46, 204, 113, 0.8)', // Late tracking (green)
+                                        'rgba(46, 204, 113, 0.8)',
+                                        'rgba(46, 204, 113, 0.8)',
+                                        'rgba(46, 204, 113, 0.8)'
                                     ],
-                                    backgroundColor: 'rgba(231, 76, 60, 0.8)',
-                                    borderColor: 'rgba(231, 76, 60, 1)',
-                                    pointRadius: 8
-                                }, {
-                                    label: 'Late Tracking Systems',
-                                    data: [
-                                        {x: 'Late', y: 0.15, country: 'Japan'},
-                                        {x: 'Late', y: 0.08, country: 'Finland'},
-                                        {x: 'Late', y: 0.09, country: 'Sweden'},
-                                        {x: 'Late', y: 0.07, country: 'Norway'}
+                                    borderColor: [
+                                        'rgba(231, 76, 60, 1)',
+                                        'rgba(231, 76, 60, 1)',
+                                        'rgba(231, 76, 60, 1)',
+                                        'rgba(46, 204, 113, 1)',
+                                        'rgba(46, 204, 113, 1)',
+                                        'rgba(46, 204, 113, 1)',
+                                        'rgba(46, 204, 113, 1)'
                                     ],
-                                    backgroundColor: 'rgba(46, 204, 113, 0.8)',
-                                    borderColor: 'rgba(46, 204, 113, 1)',
-                                    pointRadius: 8
+                                    borderWidth: 2
                                 }]
                             },
                             options: {
                                 responsive: true,
+                                maintainAspectRatio: false,
+                                legend: { display: false },
                                 title: {
                                     display: true,
                                     text: 'Education System Type vs Gender Gap Size',
@@ -466,26 +482,15 @@
                                         }
                                     }],
                                     xAxes: [{
-                                        type: 'category',
-                                        labels: ['Early', 'Late'],
-                                        scaleLabel: {
-                                            display: true,
-                                            labelString: 'Stereotype Acquisition Timing',
-                                            fontSize: 13
-                                        },
                                         ticks: {
-                                            fontSize: 12
+                                            fontSize: 10
                                         }
                                     }]
-                                },
-                                legend: {
-                                    display: true,
-                                    position: 'bottom'
                                 }
                             }
                         });
                         
-                        updateStatus('chart3', '✅ Chart loaded successfully');
+                        updateStatus('chart3', '✅ Education systems chart loaded successfully');
                         console.log('Chart 3 initialized successfully');
                     } else {
                         throw new Error('Chart.js not available or canvas not found');
@@ -496,7 +501,7 @@
                 }
             }, 2000);
 
-            // Chart 4: Cultural Factors Japan vs France (Plotly)
+            // Chart 4: Cultural Factors Comparison (Plotly) - Fixed
             setTimeout(function() {
                 try {
                     console.log('Initializing Chart 4...');
@@ -506,33 +511,41 @@
                         console.log('Plotly available, creating cultural factors chart');
                         
                         Plotly.newPlot('culturalFactorsChart', [{
-                            x: ['Collective Learning', 'Late Tracking', 'Cooperative Methods', 'Harmony Focus', 'Group Achievement'],
+                            x: ['Collective\nLearning', 'Late\nTracking', 'Cooperative\nMethods', 'Harmony\nFocus', 'Group\nAchievement'],
                             y: [0.85, 0.78, 0.72, 0.68, 0.61],
                             type: 'bar',
                             name: 'Japan (Cooperative)',
                             marker: {
-                                color: 'rgba(46, 204, 113, 0.8)',
-                                opacity: 0.8
+                                color: 'rgba(46, 204, 113, 0.8)'
                             }
                         }, {
-                            x: ['Individual Competition', 'Early Tracking', 'Competitive Methods', 'Achievement Focus', 'Individual Success'],
+                            x: ['Individual\nCompetition', 'Early\nTracking', 'Competitive\nMethods', 'Achievement\nFocus', 'Individual\nSuccess'],
                             y: [0.71, 0.84, 0.76, 0.79, 0.73],
                             type: 'bar',
                             name: 'France (Competitive)',
                             marker: {
-                                color: 'rgba(231, 76, 60, 0.8)',
-                                opacity: 0.8
+                                color: 'rgba(231, 76, 60, 0.8)'
                             }
                         }], {
-                            title: { text: 'Japan vs France: Cultural Education Factors', font: { size: 18 } },
-                            xaxis: { title: 'Cultural/Educational Factors', tickangle: -45, titlefont: { size: 14 } },
-                            yaxis: { title: 'Influence Coefficient', range: [0, 1], titlefont: { size: 14 } },
-                            margin: { t: 80, b: 140, l: 80, r: 60 },
+                            title: { 
+                                text: 'Japan vs France: Cultural Education Factors', 
+                                font: { size: 18 }
+                            },
+                            xaxis: { 
+                                title: 'Cultural/Educational Factors', 
+                                titlefont: { size: 14 }
+                            },
+                            yaxis: { 
+                                title: 'Influence Coefficient', 
+                                range: [0, 1], 
+                                titlefont: { size: 14 }
+                            },
+                            margin: { t: 80, b: 100, l: 80, r: 60 },
                             barmode: 'group',
                             font: { size: 12 }
                         }, { responsive: true });
                         
-                        updateStatus('chart4', '✅ Chart loaded successfully');
+                        updateStatus('chart4', '✅ Cultural factors chart loaded successfully');
                         console.log('Chart 4 initialized successfully');
                     } else {
                         throw new Error('Plotly not available');
@@ -543,30 +556,53 @@
                 }
             }, 2500);
 
-            // Add enhanced animations for metric cards
+            // Enhanced animations for metric cards
             setTimeout(function() {
-                document.querySelectorAll('.metric-card').forEach(card => {
+                document.querySelectorAll('.metric-card').forEach((card, index) => {
                     card.addEventListener('mouseenter', () => {
                         card.style.transform = 'translateY(-10px) scale(1.03)';
                     });
                     card.addEventListener('mouseleave', () => {
                         card.style.transform = 'translateY(0) scale(1)';
                     });
+                    
+                    // Initial animation
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.8s ease-in-out';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 150);
                 });
 
-                // Animate metric values
+                // Animate metric values with counting effect
                 document.querySelectorAll('.metric-value').forEach((value, index) => {
-                    value.style.opacity = '0';
-                    value.style.transform = 'translateY(30px)';
+                    const finalValue = value.textContent;
+                    value.textContent = '0';
+                    
                     setTimeout(() => {
-                        value.style.transition = 'all 1s ease-in-out';
-                        value.style.opacity = '1';
-                        value.style.transform = 'translateY(0)';
-                    }, index * 200);
+                        let current = 0;
+                        const target = parseFloat(finalValue.replace(/[^\d.]/g, ''));
+                        const increment = target / 50;
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                value.textContent = finalValue;
+                                clearInterval(timer);
+                            } else {
+                                if (finalValue.includes('.')) {
+                                    value.textContent = current.toFixed(finalValue.split('.')[1].length);
+                                } else {
+                                    value.textContent = Math.floor(current);
+                                }
+                            }
+                        }, 50);
+                    }, index * 200 + 1000);
                 });
-            }, 3000);
+            }, 1000);
             
-            console.log('Enhanced dashboard initialization complete');
+            console.log('Fixed dashboard initialization complete');
         });
     </script>
 </body>
