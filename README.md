@@ -20,6 +20,81 @@ This project investigates the neural mechanisms underlying mathematical cognitio
 ### Research Philosophy
 We follow evidence-based approaches showing that gender similarities dominate mathematical cognition at the neural level, particularly in early development stages.
 
+## 🌊 **NEW: Wavelet Analysis for Brain Activation Detection**
+
+### 🧠 **Advanced Time-Frequency Analysis**
+
+We've added comprehensive **wavelet analysis capabilities** specifically designed for detecting brain regions activated during mathematical tasks:
+
+#### **Key Features:**
+- **Multi-scale time-frequency decomposition** of BOLD signals using Morlet wavelets
+- **Frequency band analysis** targeting cognitive networks:
+  - Very slow (0.01-0.03 Hz): Default mode network
+  - Slow (0.03-0.06 Hz): Executive control
+  - Medium (0.06-0.12 Hz): Attention networks  
+  - Fast (0.12-0.25 Hz): Task-related activity
+- **Statistical significance mapping** with ethical reporting
+- **Interactive 3D brain visualizations** showing activation patterns
+- **Cross-frequency coupling analysis** for network connectivity
+
+#### **Quick Start with Wavelet Analysis:**
+
+```python
+from src.wavelet_analysis import WaveletfMRIAnalyzer
+from src.brain_visualization import BrainActivationVisualizer
+
+# Initialize analyzer with ethical reporting
+analyzer = WaveletfMRIAnalyzer(wavelet='morlet', ethical_reporting=True)
+
+# Load fMRI data (NIfTI file or synthetic demo data)
+time_series = analyzer.load_fmri_data(nifti_path='your_data.nii.gz')
+
+# Analyze mathematical task activation
+results = analyzer.analyze_math_activation(
+    task_onsets=[30, 80, 130, 180],  # When math problems were presented
+    baseline_duration=10.0,           # Baseline period (seconds)
+    activation_duration=15.0          # Analysis window (seconds)
+)
+
+# Detect activated brain regions
+regions = analyzer.detect_math_regions(threshold_percentile=95)
+
+# Create comprehensive visualizations
+analyzer.visualize_results()
+
+# Generate interactive 3D brain map
+visualizer = BrainActivationVisualizer()
+brain_3d = visualizer.create_interactive_3d_brain(results)
+brain_3d.show()
+```
+
+#### **Command Line Interface:**
+
+```bash
+# Basic wavelet analysis with synthetic data
+python run_wavelet_analysis.py --output results/ --visualize
+
+# Analysis with real fMRI data
+python run_wavelet_analysis.py --input data.nii.gz --mask brain_mask.nii.gz --output results/
+
+# Full analysis with interactive visualizations
+python run_wavelet_analysis.py --input data.nii.gz --output results/ --visualize --interactive
+
+# Custom parameters for Japanese mathematical cognition study
+python run_wavelet_analysis.py \
+    --onsets 30,80,130,180 \
+    --baseline 15 \
+    --duration 20 \
+    --threshold 95 \
+    --export-json \
+    --save-report
+```
+
+#### **Example Notebook:**
+📓 **[Complete Wavelet Analysis Tutorial](examples/wavelet_analysis_example.ipynb)**
+
+---
+
 ## 🧠 Scientific Background
 
 ### Current Research Context
@@ -39,16 +114,18 @@ Recent meta-analyses and neuroimaging studies provide compelling evidence:
 
 ## 🔬 Methodology
 
-### Similarity-Focused Analysis Framework
+### Enhanced Analysis Framework with Wavelet Decomposition
 
 ```mermaid
 graph TD
     A[fMRI Data Collection] --> B[Ethical Preprocessing]
-    B --> C[Similarity Detection Models]
-    C --> D[Cultural Context Integration]
-    D --> E[Generative AI Enhancement]
-    E --> F[Interpretable Results]
-    F --> G[Ethical Reporting]
+    B --> C[Wavelet Time-Frequency Analysis]
+    C --> D[Multi-Band Activation Detection]
+    D --> E[Similarity Detection Models]
+    E --> F[Cultural Context Integration]
+    F --> G[Generative AI Enhancement]
+    G --> H[Interactive Visualization]
+    H --> I[Ethical Reporting]
 ```
 
 ### Technical Approach
@@ -58,17 +135,23 @@ graph TD
    - Quality control with bias detection
    - Cultural demographic integration
 
-2. **Similarity-Focused Models**
+2. **Wavelet Analysis Pipeline**
+   - Continuous wavelet transform using Morlet wavelets
+   - Multi-frequency band decomposition
+   - Statistical significance testing
+   - Cross-frequency coupling analysis
+
+3. **Similarity-Focused Models**
    - Variational Autoencoders (VAE) for feature learning
    - Similarity detection neural networks
    - Connectivity-based analysis
 
-3. **Generative AI Components**
+4. **Generative AI Components**
    - Data augmentation to address small sample sizes
    - Synthetic data generation for validation
    - Transfer learning across populations
 
-4. **Ethical AI Framework**
+5. **Ethical AI Framework**
    - Bias mitigation techniques
    - Interpretability-first design
    - Cultural sensitivity integration
@@ -166,6 +249,7 @@ Based on current literature, we expect to find:
 ### Deliverables
 - 📈 **Interactive research dashboard** with quantitative metrics
 - 📊 **Similarity-focused analysis pipeline**
+- 🌊 **Wavelet analysis toolkit** for brain activation detection
 - 🤖 **Generative AI models** for fMRI enhancement
 - 📋 **Ethical guidelines** for gender difference research
 - 🎌 **Cultural context framework** for Japanese populations
@@ -179,7 +263,7 @@ Based on current literature, we expect to find:
 # Python 3.8+ required
 python --version
 
-# Install dependencies
+# Install dependencies (including wavelet analysis libraries)
 pip install -r requirements.txt
 
 # Or using conda
@@ -261,16 +345,18 @@ report = analyzer.generate_report()
 ```
 📁 MCP-fMRI/
 ├── 🧠 Neural Models (VAE, Similarity Networks)
+├── 🌊 Wavelet Analysis (Time-frequency decomposition, activation detection)
 ├── 📊 Data Processing (fMRI preprocessing, quality control)
 ├── 🎯 Analysis Framework (Similarity detection, cultural integration)
-├── 🎨 Visualization (Brain plots, similarity metrics)
+├── 🎨 Visualization (Brain plots, similarity metrics, interactive 3D)
 ├── 📋 Ethical Tools (Bias detection, reporting templates)
 └── 🔬 Validation (Statistical testing, reproducibility)
 ```
 
 ### Key Technologies
+- **PyWavelets**: Wavelet analysis and time-frequency decomposition
+- **Nilearn**: Neuroimaging analysis and brain visualization
 - **TensorFlow/Keras**: Deep learning models
-- **Nilearn**: Neuroimaging analysis
 - **Scikit-learn**: Traditional ML algorithms
 - **Plotly/Matplotlib**: Interactive visualizations
 - **Pandas/NumPy**: Data manipulation
@@ -333,6 +419,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🔍 Quick Navigation
 
 - [🎯 Research Objectives](#-research-objectives)
+- [🌊 Wavelet Analysis](#-new-wavelet-analysis-for-brain-activation-detection)
 - [🔬 Methodology](#-methodology)
 - [📊 Live Dashboard](#-live-research-dashboard--results-summary)
 - [🚀 Getting Started](#-getting-started)
