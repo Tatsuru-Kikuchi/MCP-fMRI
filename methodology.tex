@@ -1,0 +1,603 @@
+\section{Methodology}
+\subsection{Participants}
+One hundred fifty-six Japanese participants (78 males, 78 females; age range: 6-12 years, mean = 8.4 ± 1.8 years) were recruited from elementary schools in the Tokyo metropolitan area. All participants were native Japanese speakers with normal or corrected-to-normal vision, no history of neurological disorders, and no contraindications for MRI scanning. The study protocol was approved by the University Ethics Committee, and written informed consent was obtained from parents/guardians with participant assent.
+
+\vspace{0.5\baselineskip}
+\noindent
+\textbf{Inclusion criteria}
+\indent
+\begin{itemize}
+\item Native Japanese speakers 
+\item Age 6-12 years (elementary school age)
+\item Normal or corrected-to-normal vision 
+\item No history of neurological or psychiatric disorders 
+\item No learning disabilities or mathematical difficulties 
+\item Right-handed (assessed using Edinburgh Handedness Inventory)
+\end{itemize}
+\noindent
+\textbf{Exclusion criteria}
+\indent
+\begin{itemize}
+\item Non-native Japanese speakers 
+\item History of head injury or neurological conditions 
+\item Diagnosed learning disabilities 
+\item Claustrophobia or inability to remain still during scanning 
+\item Metallic implants or other MRI contraindications 
+\item Current medication affecting cognitive function 
+\end{itemize}
+
+Sample size was determined using power analysis (G*Power 3.1.9.7) based on previous neuroimaging studies of mathematical cognition (Kersey et al., 2019), with power $= 0.80,~\alpha = 0.05$, and expected effect size $d = 0.3$ for detecting meaningful differences in brain activation.
+
+
+
+\subsection{Experimental Design}
+Participants performed a block-design mathematical cognition task during fMRI scanning. The task consisted of four conditions presented in a randomized block design:
+
+\subsection*{Condition 1: Arithmetic Operation}
+\begin{itemize}
+\item Addition and subtraction problems appropriate for participant age
+\item Problems presented as "3 + 4 = ?" or "8 - 3 = ?"
+\item Difficulty adapted to grade level (1st-6th grade)
+\item Response via MRI-compatible button box
+\end{itemize}
+
+\subsection*{Condition 2: Number Comparison}
+\begin{itemize}
+\item Participants compared numerical magnitudes
+\item Tasks like "Which is larger: 7 or 4?"
+\item Both symbolic (Arabic numerals) and non-symbolic (dot arrays) stimuli
+\item Tests basic numerical magnitude processing
+\end{itemize}
+
+
+\subsection*{Condition 3: Spatial-Numerical Processing}
+\begin{itemize}
+\item Mental rotation of numbers and spatial arrangement tasks
+\item Number line estimation ("Where does 6 go on a line from 1 to 10?")
+\item Tests spatial aspects of numerical cognition
+\end{itemize}
+
+\subsection*{Condition 4: Rest Baseline}
+\begin{itemize}
+\item Fixation cross presented on screen
+\item Participants instructed to relax and look at the cross
+\item No cognitive demands, serves as baseline for activation comparisons
+\end{itemize}
+
+
+\subsection*{Task Parameters:}
+\begin{itemize}
+\item Block duration: 20 seconds per condition
+\item 4 blocks per condition per run
+\item 2 runs per participant (total scan time ~40 minutes)
+\item Inter-stimulus interval: 2-3 seconds (jittered)
+\item Response deadline: 4 seconds maximum
+\end{itemize}
+
+
+\subsection*{Cultural Adaptations:}
+\begin{itemize}
+\item Mathematical problems used Japanese number concepts where applicable
+\item Instructions provided in native Japanese
+\item Difficulty levels matched to Japanese educational curriculum standards
+\item Practice session conducted outside scanner to ensure task comprehension
+\end{itemize}
+
+
+\subsection{fMRI Data Acquisition}
+Functional imaging was performed using a 3T Siemens Prisma MRI scanner with a 32-channel head coil at the University Neuroimaging Center. Participants lay supine in the scanner with head motion minimized using foam padding and a vacuum-molded head holder.
+
+
+\subsection*{Functional Imaging Parameters:}
+\begin{itemize}
+\item Sequence: Gradient-echo echo-planar imaging (EPI)
+\item Repetition time (TR): 2000 ms
+\item Echo time (TE): 30 ms
+\item Flip angle: 90°
+\item Field of view: 220 × 220 mm
+\item Matrix size: 64 × 64
+\item Voxel size: 3.4 × 3.4 × 3.5 mm
+\item Slice thickness: 3.5 mm (no gap)
+\item Number of slices: 35 (axial orientation)
+\item Brain coverage: Whole brain including cerebellum
+\item Volumes per run: 200 (total 400 volumes)
+\end{itemize}
+
+
+\subsection*{Anatomical Imaging Parameters:}
+\begin{itemize}
+\item Sequence: Magnetization-prepared rapid gradient-echo (MPRAGE)
+\item Repetition time (TR): 2300 ms
+\item Echo time (TE): 2.98 ms
+\item Flip angle: 9°
+\item Field of view: 256 × 256 mm
+\item Matrix size: 256 × 256
+\item Voxel size: 1 × 1 × 1 mm³ (isotropic)
+\item Slice orientation: Sagittal
+\item Total acquisition time: 5 minutes
+\end{itemize}
+
+
+\subsection*{Quality Assurance:}
+\begin{itemize}
+\item Scanner stability monitored using daily phantom scans
+\item Participant head motion monitored in real-time
+\item Signal quality assessed for each participant before task initiation
+\item Ear protection provided (foam earplugs + headphones)
+\end{itemize}
+
+
+
+
+
+
+
+
+\subsection{fMRI Data Preprocessing}
+Data preprocessing was conducted using a standardized pipeline implemented in Python, combining functions from Nilearn (version 0.10.1), FSL (version 6.0.4), and custom algorithms. Each preprocessing step was selected to address specific sources of noise and artifacts while preserving task-related neural signals.
+
+\subsection{Data Quality Assessment}
+Initial quality control was performed on all datasets before preprocessing:
+
+\begin{itemize}
+\item \textbf{Visual inspection} of raw data for artifacts, signal dropouts, or distortions
+\item \textbf{Motion parameter extraction} to identify high-motion participants
+\item \textbf{Signal-to-noise ratio (SNR)} calculation for each participant
+\item \textbf{Temporal signal-to-noise ratio (tSNR)} assessment
+\end{itemize}
+
+
+\subsubsection{Motion Correction}
+Head motion parameters were estimated and corrected using a six-parameter rigid-body transformation algorithm (FSL MCFLIRT).
+
+\noindent
+\textbf{Why this step is needed:} Even small head movements ($<$ 1 mm) can introduce substantial artifacts in fMRI signals, potentially confounding group comparisons. Children are particularly prone to head motion, making this correction critical for developmental neuroimaging studies.
+
+\noindent
+\textbf{Implementation:} Each volume aligned to the middle volume of the first run
+Six motion parameters extracted: 3 translations ($x, y, z$) and 3 rotations (pitch, roll, yaw)
+Motion parameters saved for subsequent analysis and quality control
+Participants with excessive motion (framewise displacement $>$ 3 mm) flagged for potential exclusion
+
+
+\subsubsection{Slice Timing Correction}
+Temporal alignment of all brain slices to a common reference time point using sinc interpolation.
+
+\noindent
+\textbf{Why this step is needed:} Since different brain slices are acquired at slightly different times within each TR (2 seconds), slice timing correction aligns all slices to the same temporal reference. This correction is particularly important for event-related designs and when precise timing of neural responses is critical for analysis.
+
+\noindent
+\textbf{Implementation:} Reference slice: middle slice (slice 18 of 35)
+Interpolation method: Fourier-based sinc interpolation
+Corrects for acquisition time differences across slices within each volume
+
+\noindent
+\subsection{Spatial Normalization}
+Individual brain images were registered to the Montreal Neurological Institute (MNI) 152 standard space template using a two-step process.
+Why this step is needed: This standardization enables group-level statistical analysis and comparison across participants while accounting for individual differences in brain anatomy. Without normalization, anatomical variability would prevent meaningful group analysis.
+
+\textbf{Implementation:} 
+\begin{itemize}
+\item \textbf{Coregistration:} Functional images aligned to each participant's high-resolution anatomical T1 image using rigid-body transformation
+\item \textbf{Normalization:} Anatomical image warped to MNI 152 space using nonlinear transformation (FSL FNIRT)
+\item \textbf{Application:} Transformation parameters applied to functional data
+\item \textbf{Resampling:} Final voxel size 2 × 2 × 2 mm (isotropic)
+\end{itemize}
+
+
+\subsection{Spatial Smoothing}
+A Gaussian smoothing kernel with 8 mm full-width at half-maximum (FWHM) was applied.
+
+\vspace{0.5\baselineskip}
+\noindent
+\textbf{Why this step is needed:} Smoothing increases signal-to-noise ratio and ensures data normality for statistical analysis. It also compensates for residual anatomical differences after normalization and increases the likelihood of detecting activation patterns that are consistent across participants.
+
+\noindent
+\textbf{Implementation:} 
+\begin{itemize}
+\item Gaussian kernel: 8 mm FWHM in all three dimensions
+\item Applied after spatial normalization
+\item Kernel size chosen to balance sensitivity and spatial specificity for pediatric populations
+\end{itemize}
+
+
+\subsection{Temporal Filtering}
+High-pass temporal filtering was applied to remove low-frequency signal drifts.
+
+\vspace{0.5\baselineskip}
+\noindent
+\textbf{Why this step is needed:} This step removes low-frequency signal drifts and scanner-related artifacts while preserving task-related signal fluctuations. It's crucial for removing physiological noise such as respiratory and cardiac artifacts that can contaminate the BOLD signal.
+
+\noindent
+\textbf{Implementation:}
+\begin{itemize}
+\item High-pass filter cutoff: 128 seconds (0.008 Hz)
+\item Filter type: Gaussian-weighted least-squares straight line fitting
+\item Preserves task-related frequencies while removing slow drifts
+\end{itemize}
+
+
+\subsection{Comprehensive Quality Control}
+Final quality control metrics calculated for each participant:
+
+\vspace{0.5\baselineskip}
+\noindent
+\textbf{Signal Quality Metrics:} 
+\begin{itemize}
+\item Signal-to-noise ratio (SNR): Mean signal divided by temporal standard deviation
+\item Temporal SNR (tSNR): Mean signal divided by temporal standard deviation after detrending
+\item Framewise displacement (FD): Volume-to-volume head motion measure
+\item Ghost-to-signal ratio: Assessment of EPI artifacts
+\end{itemize}
+Here we have abbreviated "tSNR" - Define as "temporal signal-to-noise ratio (tSNR)".
+
+\noindent
+\textbf{Quality Thresholds:}
+\begin{itemize}
+\item Minimum SNR: 100
+\item Minimum tSNR: 50
+\item Maximum mean FD: 0.5 mm
+\item Maximum single-volume FD: 3 mm
+\item Maximum ghost-to-signal ratio: 0.1
+\end{itemize}
+
+\section{Data Analysis}
+\subsection{Wavelet Time-Frequency Analysis}
+Advanced wavelet analysis was performed to decompose fMRI signals into multiple frequency bands, enabling detection of specific neural oscillations associated with mathematical processing.
+
+\subsection{Continuous Wavelet Transform}
+Morlet wavelets were applied to extract time-frequency representations of BOLD signals across four physiologically-relevant frequency bands:
+
+\vspace{0.5\baselineskip}
+\noindent
+\textbf{Frequency Band Definitions:} 
+\begin{itemize}
+\item Very slow oscillations (0.01-0.03 Hz): Associated with default mode network activity and global brain states
+\item Slow oscillations (0.03-0.06 Hz): Related to executive control networks and sustained attention
+\item Medium oscillations (0.06-0.12 Hz): Linked to attention and working memory networks
+\item Fast oscillations (0.12-0.25 Hz): Associated with task-specific activation and local processing
+\end{itemize}
+
+\noindent
+\textbf{Implementation Details:}
+\begin{itemize}
+\item Wavelet type: Complex Morlet wavelets (optimal for time-frequency analysis)
+\item Frequency resolution: 0.01 Hz steps across analysis range
+\item Time resolution: 1 TR (2 seconds)
+\item Wavelet parameters: $\omega = 6$ (balance between time and frequency resolution)
+\item Edge artifact handling: 3-cycle buffer at beginning and end of each run
+\end{itemize}
+
+
+\subsection{Statistical Significance Testing}
+Wavelet coefficients were statistically tested using non-parametric permutation testing to control for multiple comparisons across time-frequency space.
+
+\vspace{0.5\baselineskip}
+\noindent
+\textbf{Permutation Testing Procedure:}
+\begin{itemize}
+\item \textbf{Null hypothesis:} No difference in wavelet power between mathematical tasks and baseline
+\item \textbf{Permutation strategy:} Task labels randomly shuffled 10,000 times per participant
+\item \textbf{Test statistic:} Two-sample t-test at each time-frequency point
+\item \textbf{Correction method:} False discovery rate (FDR) correction (Benjamini-Hochberg procedure)
+\item \textbf{Significance threshold:} $q < 0.05$ (FDR-corrected)
+\end{itemize}
+
+\noindent
+\textbf{Cluster-Level Statistics:}
+\begin{itemize}
+\item Minimum cluster size: $10$ contiguous voxels
+\item Cluster-forming threshold: $p < 0.001$ (uncorrected)
+\item Cluster-level correction: $p < 0.05$ (FWE-corrected)
+\end{itemize}
+Here we have used abbreviation "FWE" - Define as "family-wise error (FWE)".
+
+\subsection{Similarity-Focused Machine Learning Analysis}
+Rather than traditional approaches that emphasize group differences, we implemented machine learning algorithms specifically designed to quantify neural similarities and detect shared patterns across participants.
+
+\subsection{Region of Interest (ROI) Definition}
+Activation patterns were extracted from anatomically-defined regions consistently implicated in mathematical cognition:
+
+\vspace{0.5\baselineskip}
+\noindent
+\textbf{Primary Mathematical ROIs:}
+\begin{itemize}
+\item Bilateral intraparietal sulcus (IPS): Core numerical processing region
+\item Bilateral inferior frontal gyrus (IFG): Mathematical language and working memory
+\item Bilateral angular gyrus (AG): Mathematical fact retrieval and semantic processing
+\item Supplementary motor area (SMA): Mathematical procedure execution
+\end{itemize}
+
+\noindent
+\textbf{ROI Definition Method:}
+\begin{itemize}
+\item Anatomical masks from Harvard-Oxford Cortical Atlas (thresholded at 50 \%)
+\item Functional constraints: Only voxels showing task-related activation ($p < 0.05$, uncorrected)
+\item Individual participant ROIs: Intersection of anatomical mask and individual activation
+\end{itemize}
+
+
+\subsection{Feature Extraction}
+Multiple types of features extracted from each ROI for machine learning analysis:
+
+\vspace{0.5\baselineskip}
+\noindent
+\textbf{Spatial Features:}
+\begin{itemize}
+\item Activation magnitude: Mean beta coefficients from GLM analysis
+\item Activation extent: Number of significantly activated voxels
+\item Peak coordinates: Location of maximum activation within each ROI
+\end{itemize}
+
+\noindent
+\textbf{Temporal Features:}
+\begin{itemize}
+\item Time course patterns: Mean time series extracted from each ROI
+\item Onset latency: Time to peak activation after task onset
+\item Sustained vs. transient activity: Analysis of activation duration patterns
+\end{itemize}
+
+\noindent
+\textbf{Frequency Features:}
+\begin{itemize}
+\item Wavelet coefficients: Power in each frequency band for each ROI
+\item Cross-frequency coupling: Phase-amplitude coupling between frequency bands
+\item Spectral patterns: Frequency-specific activation profiles
+\end{itemize}
+
+
+\subsection{Similarity Quantification}
+Neural similarity was quantified using multiple complementary metrics:
+
+\vspace{0.5\baselineskip}
+\noindent
+\textbf{Spatial Similarity Measures:}
+\begin{itemize}
+\item Pearson correlation coefficients: Between activation maps (r-values)
+\item Spatial overlap: Dice similarity coefficient for activation extent
+\item Pattern correlation: Voxel-wise correlation within ROIs
+\end{itemize}
+
+\noindent
+\textbf{Temporal Similarity Measures:}
+\begin{itemize}
+\item Cross-correlation: Time series similarity between corresponding ROIs
+\item Dynamic time warping: Alignment of temporal patterns allowing for slight timing differences
+\item Phase coherence: Synchronization of oscillatory activity between participants
+\end{itemize}
+
+\noindent
+\textbf{Representational Similarity Analysis (RSA):}
+\begin{itemize}
+\item Multi-voxel pattern analysis: Comparing activation patterns across mathematical tasks
+\item Representational distance matrices: Quantifying similarity of neural representations
+\item Cross-participant RSA: Assessing consistency of representational geometry
+\end{itemize}
+
+
+\subsection{Classification Analysis}
+Support vector machine (SVM) classifiers were trained to test for distinguishable gender-based neural patterns.
+
+\vspace{0.5\baselineskip}
+\noindent
+\textbf{Rationale:} 
+Classification accuracy at chance level (50 \%) would indicate no distinguishable gender differences, while high accuracy would suggest systematic neural differences.
+
+\noindent
+\textbf{Implementation:}
+\begin{itemize}
+\item Algorithm: Support Vector Machine with radial basis function (RBF) kernel
+\item Features: ROI activation patterns, wavelet coefficients, and temporal features
+\item Cross-validation: Stratified 5-fold cross-validation (maintaining equal gender distribution)
+\item Performance metrics: Accuracy, sensitivity, specificity, and area under ROC curve
+\item Permutation testing: 1,000 permutations with shuffled labels to establish chance performance
+\end{itemize}
+
+\noindent
+\textbf{Feature Selection:}
+\begin{itemize}
+\item Dimensionality reduction: Principal Component Analysis (PCA) to reduce feature space
+\item Feature importance: Recursive feature elimination to identify most discriminative features
+\item Regularization: L1 and L2 penalties to prevent overfitting
+\end{itemize}
+
+
+\subsection{Cultural Context Integration}
+Given the importance of cultural factors in mathematical cognition, we integrated cultural variables into our analysis framework to better understand the Japanese educational context.
+
+\subsection{Educational Background Assessment}
+Participants' mathematical learning experiences were assessed using culturally-adapted questionnaires:
+
+\vspace{0.5\baselineskip}
+\noindent
+\textbf{Traditional Japanese Mathematical Concepts:}
+\begin{itemize}
+\item Soroban (abacus) experience: Frequency and duration of abacus training
+\item Mental arithmetic methods: Exposure to traditional Japanese calculation techniques
+\item Kumon methodology: Participation in supplementary mathematics programs
+\item Group learning experiences: Participation in collaborative learning environments
+\end{itemize}
+
+\noindent
+\textbf{Western Mathematical Approaches:}
+\begin{itemize}
+\item Individual problem-solving: Exposure to Western-style individual mathematical tasks
+\item Competitive mathematics: Participation in mathematical competitions or ranking systems
+\item Technology use: Integration of calculators and computer-based mathematics
+\end{itemize}
+
+\noindent
+\textbf{Assessment Tools:}
+\begin{itemize}
+\item Parent questionnaires: Educational history and mathematical activities at home
+\item Teacher reports: Classroom mathematical approaches and student performance
+\item Student interviews: Age-appropriate questions about mathematical experiences and preferences
+\end{itemize}
+
+
+\subsection{Stereotype Measurement}
+Implicit and explicit gender-mathematics stereotypes were measured using child-appropriate assessment tools:
+Implicit Association Test (IAT) - Child Version:
+
+\vspace{0.5\baselineskip}
+\noindent
+\textbf{Math-Gender IAT: }
+\begin{itemize}
+\item Associations between mathematical concepts and gender
+\item Simplified procedure: Adapted for 6-12 year olds with picture-based stimuli
+\item Stimuli: Mathematical symbols vs. language symbols paired with boy/girl images
+\item Outcome measure: Implicit bias score (D-score).
+\end{itemize}
+
+\noindent
+\textbf{Explicit Stereotype Assessment:}
+\begin{itemize}
+\item Direct questioning: "Who is better at math: boys, girls, or the same?"
+\item Ability attributions: Reasons for mathematical success and failure
+\item Career aspirations: Interest in mathematical and scientific careers.
+\item Self-efficacy: Confidence in mathematical abilities
+\end{itemize}
+
+\noindent
+\textbf{Cultural Stereotype Measures:}
+\begin{itemize}
+\item Collectivism vs. individualism: Cultural orientation assessment
+\item Gender role attitudes: Traditional vs. egalitarian gender role beliefs
+\item Educational values: Importance of effort vs. ability in mathematical success
+\end{itemize}
+
+
+\section{Statistical Analysis}
+\subsection{Group-Level Analysis}
+Traditional group-level statistical parametric mapping was performed using the general linear model (GLM) implemented in Nilearn.
+
+\vspace{0.5\baselineskip}
+\noindent
+\textbf{GLM Design:}
+\begin{itemize}
+\item Task regressors: Separate regressors for each mathematical condition
+\item Motion regressors: Six head motion parameters as nuisance variables
+\item Temporal derivatives: Included to account for small timing variations
+\item High-pass filtering: Applied to design matrix (128-second cutoff)
+\end{itemize}
+
+\noindent
+\textbf{Contrast Definitions:}
+\begin{itemize}
+\item Mathematical tasks > baseline: Overall mathematical activation
+\item Arithmetic $>$ baseline: Specific activation for arithmetic operations
+\item Number comparison $>$ baseline: Magnitude processing activation
+\item Spatial-numerical $>$ baseline: Spatial-mathematical processing
+\end{itemize}
+
+\noindent
+\textbf{Statistical Thresholds:}
+\begin{itemize}
+\item Voxel-level: $p < 0.001$ (uncorrected) for cluster formation
+\item Cluster-level: $p < 0.05$ (FWE-corrected) for final significance
+\item Minimum cluster size: $10$ voxels (80 mm³)
+\end{itemize}
+
+\subsection{Similarity Emphasis Analysis}
+Following current best practices in gender research, primary analyses emphasized quantification of similarities rather than differences:
+
+\vspace{0.5\baselineskip}
+\noindent
+\textbf{Similarity Metrics:}
+\begin{itemize}
+\item Spatial correlation: Pearson correlation between group activation maps
+\item Overlap coefficient: Proportion of overlapping activated voxels
+\item Effect size calculation: Cohen's d for all comparisons with emphasis on small effects ($d < 0.2$)
+\end{itemize}
+
+\noindent
+\textbf{Statistical Approach:}
+\begin{itemize}
+\item Equivalence testing: TOST (Two One-Sided Tests) procedure to test for statistical equivalence
+\item Bayes factors: Quantifying evidence for similarity vs. difference hypotheses
+\item Confidence intervals: Focus on effect size confidence intervals rather than p-values alone
+\end{itemize}
+Here we have abbreviated "TOST" - Define as "Two One-Sided Tests (TOST)".
+
+\subsection{Individual Differences Analysis}
+Variance decomposition was performed to quantify the relative contribution of individual differences versus group-level differences:
+
+\vspace{0.5\baselineskip}
+\noindent
+\textbf{Variance Components:}
+\begin{itemize}
+\item Between-individual variance: Variability across all participants
+\item Between-group variance: Variability between gender groups
+\item Within-individual variance: Test-retest reliability estimates
+\item Residual variance: Unexplained measurement error
+\end{itemize}
+
+\noindent
+\textbf{Analysis Methods:}
+\begin{itemize}
+\item Intraclass correlation coefficients (ICC): Reliability of individual differences
+\item Variance ratio calculations: Individual:group variance ratios
+\item Mixed-effects modeling: Accounting for nested data structure (participants within schools)
+\end{itemize}
+
+
+\subsection{Ethical Considerations}
+The analysis framework was designed with ethical principles prioritizing responsible research practices:
+
+\vspace{0.5\baselineskip}
+\noindent
+\textbf{Core Ethical Principles:}
+Similarity detection over difference-seeking approaches to avoid reinforcing stereotypes
+Individual variation emphasis rather than group generalizations
+Cultural sensitivity in interpretation of findings within Japanese context
+Bias mitigation through technical and methodological controls
+Non-discriminatory applications ensuring results cannot justify educational or occupational discrimination
+
+\noindent
+\textbf{Implementation:}
+\begin{itemize}
+\item Bias testing: Systematic evaluation of potential confounds in data collection and analysis
+\item Inclusive analysis: Equal attention to evidence supporting similarities and differences
+\item Cultural consultation: Collaboration with Japanese educators and cultural experts
+\item Result interpretation guidelines: Framework for ethical interpretation and reporting
+\end{itemize}
+
+
+\section{Data Availability and Reproducibility}
+All analysis procedures were designed to maximize transparency and reproducibility:
+
+\vspace{0.5\baselineskip}
+\noindent
+\textbf{Code Availability:}
+\begin{itemize}
+\item Public repository: All analysis code available at https://github.com/Tatsuru-Kikuchi/MCP-fMRI
+\item Documentation: Comprehensive documentation of all analysis steps
+\item Version control: Git-based tracking of all code changes and analysis versions
+\item Dependencies: Complete specification of software versions and computational environment
+\end{itemize}
+
+\noindent
+\textbf{Data Standards:}
+\begin{itemize}
+\item BIDS compliance: Brain Imaging Data Structure formatting for all data
+\item Metadata documentation: Complete description of acquisition parameters and participant characteristics
+\item Quality metrics: Systematic documentation of data quality for each participant
+\end{itemize}
+
+\noindent
+\textbf{Reproducibility Measures:}
+\begin{itemize}
+\item Containerization: Docker containers for complete computational environment
+\item Seed setting: Fixed random seeds for all stochastic procedures
+\item Cross-validation: Independent validation using held-out data subsets
+\item Sensitivity analysis: Testing robustness of results to methodological choices
+\end{itemize}
+
+\noindent
+\textbf{Data Sharing:}
+\begin{itemize}
+\item Group-level maps: Statistical maps shared through NeuroVault (https://neurovault.org)
+\item Privacy protection: All individual data de-identified according to HIPAA standards
+\item Access procedures: Controlled access for qualified researchers through data sharing agreements
+\item Ethical approval: All data sharing approved by institutional ethics committee
+\end{itemize}
